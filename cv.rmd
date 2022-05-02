@@ -1,0 +1,128 @@
+---
+title: "Dillon Bergin's CV"
+author: Dillon Bergin
+date: "`r Sys.Date()`"
+params:
+  pdf_mode:
+    value: true
+  sheet_is_publicly_readable:
+    value: false
+output:
+  pagedown::html_resume:
+    css: ['dd_cv.css', 'resume']
+    self_contained: true
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(
+  results='asis', 
+  echo = FALSE
+)
+
+library(magrittr) # For the pipe
+source("cv_printing_functions.r")
+
+# Read in all data and initialize a CV printer object
+CV <- create_CV_object(
+  data_location = "https://docs.google.com/spreadsheets/d/1_jIqhfgbosNUrRqRKxi3Z7xMU4bFXyCV1kbFUH9d3Mk/edit?usp=sharing",  
+  pdf_mode = params$pdf_mode,
+  sheet_is_publicly_readable = params$sheet_is_publicly_readable
+)
+
+```
+
+
+```{r}
+# When in pdf export mode the little dots are unaligned, so fix that with some conditional CSS.
+if(params$pdf_mode) {
+    cat("
+<style>
+:root{
+  --decorator-outer-offset-left: -6.5px;
+}
+</style>")
+}
+```
+
+
+Aside
+================================================================================
+Contact {#contact}
+--------------------------------------------------------------------------------
+
+```{r}
+CV %>% print_contact_info()
+```
+
+Journalism Awards {#awards}
+--------------------------------------------------------------------------------
+- [National Headliner Awards](https://www.muckrock.com/news/archives/2022/may/02/muckrock-wins-headliners/), *First Place in Online Pandemic Coverage*
+
+- [Sigma Data Journalism Awards](https://brown.columbia.edu/uncounted-shortlisted-for-best-data-project-by-the-sigma-awards/), *Shortlisted for Best Data Journalism Project*
+
+- [Society of Professional Journalists](https://twitter.com/SearchlightNM/status/1513993070735335425), *First Place in Public Service for Rocky Mountain Region*
+
+
+Computer Languages {#skills1}
+--------------------------------------------------------------------------------
+
+```{r}
+CV %>% print_skill_bars1()
+```
+
+Human Languages {#skills2}
+--------------------------------------------------------------------------------
+
+```{r}
+CV %>% print_skill_bars2()
+
+```
+
+
+{#nothing}
+--------------------------------------------------------------------------------
+Made with the R package [**datadrivencv**](https://github.com/nstrayer/datadrivencv). 
+
+The source code is available [on github.com/DillonBergin/my_resume](https://github.com/DillonBergin/my_resume).
+
+Last updated on `r Sys.Date()`.
+
+```{r}
+if(params$pdf_mode){
+  cat("View this CV online with links at _nickstrayer.me/datadrivencv/_")
+} else {
+  cat("[<i class='fas fa-download'></i> Download a PDF of this CV](C:/Users/newsd/home/personal/resume/my_resume/my_resume.pdf/C:/Users/newsd/home/personal/resume/my_resume/C:/Users/newsd/home/personal/resume/my_resume)")
+}
+```
+
+Main
+================================================================================
+
+Dillon Bergin {#title}
+--------------------------------------------------------------------------------
+
+```{r}
+# Note the special double pipe so we modify the CV object in place
+CV %<>% print_text_block("intro") 
+```
+
+Work Experience {data-icon=newspaper data-concise=true}
+--------------------------------------------------------------------------------
+
+```{r}
+CV %<>% print_section('research_positions')
+```
+
+
+
+Education {data-icon=graduation-cap data-concise=true}
+--------------------------------------------------------------------------------
+
+```{r}
+CV %<>% print_section('education')
+```
+
+
+
+
+
