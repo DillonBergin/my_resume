@@ -89,7 +89,7 @@ Last updated on `r Sys.Date()`.
 
 ```{r}
 if(params$pdf_mode){
-  cat("View this CV online with links at _nickstrayer.me/datadrivencv/_")
+  cat("View this CV online with links at _https://dillonbergin.github.io/my_resume/_")
 } else {
   cat("[<i class='fas fa-download'></i> Download a PDF of this CV](C:/Users/newsd/home/personal/resume/my_resume/my_resume.pdf/C:/Users/newsd/home/personal/resume/my_resume/C:/Users/newsd/home/personal/resume/my_resume)")
 }
